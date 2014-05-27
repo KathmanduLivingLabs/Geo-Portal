@@ -63,7 +63,7 @@
         strokeColor: 'purple',
         strokeWidth: 2,
         strokeOpacity: 0.6,
-        fillColor: '#FFF',
+        fillColor: '#0E7674',
         fillOpacity: 1.0
     };
     var boundaryLayer = new OpenLayers.Layer.Vector("Boundary", {
