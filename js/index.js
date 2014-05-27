@@ -20,8 +20,7 @@
         projection: "EPSG:900913",
         displayProjection: "EPSG:4326",
         controls: [],
-        allOverlays: true,
-        restrictedExtent: bounds.scale(1.3)
+        restrictedExtent: bounds.scale(1.9)
     });
 
     map.addControl(new OpenLayers.Control.ArgParser());
@@ -36,16 +35,17 @@
             enableKinetic: false
         }
     }));
-    map.addControl(new OpenLayers.Control.PanZoomBar());
+    map.addControl(new OpenLayers.Control.Zoom());
     map.addControl(new OpenLayers.Control.Permalink());
 
     // base map with restricted extent and limited zoom
-    var zoomOffset = 11;
+    var zoomOffset = 15;
+
     var osm = new OpenLayers.Layer.OSM("OSM Mapnik", null, {
         zoomOffset: zoomOffset,
         maxResolution: 156543.03390625 / Math.pow(2, zoomOffset),
         numZoomLevels: 18 - zoomOffset + 1,
-        attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
+        attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
     });
     map.addLayer(osm);
 
