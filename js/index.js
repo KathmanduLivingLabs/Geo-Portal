@@ -107,6 +107,138 @@
     //define the layers
     //add to the map
 
+    var styleschool = new OpenLayers.Style({
+        label: "${name}",
+        fontColor: "yellow",
+        fontSize: "12",
+        graphicWidth: "${graphicWidth}",
+        graphicHeight: "${graphicHeight}",
+        externalGraphic: "${symbol}"
+    }, {
+        context: {
+            name: function(feature) {
+                return (feature.cluster) ? (feature.attributes.count) : "";
+            },
+            graphicHeight: function(feature) {
+                if (feature.cluster) {
+                    if (feature.attributes.count > 25) {
+                        return (12 + feature.attributes.count * .15);
+                    } else {
+                        return 15;
+                    }
+                } else {
+                    // return (200/map.getZoom());
+                    return 15;
+                }
+            },
+            graphicWidth: function(feature) {
+                if (feature.cluster) {
+                    if (feature.attributes.count > 25) {
+                        return (12 + feature.attributes.count * .15);
+                    } else {
+                        return 15;
+                    }
+                } else {
+                    // return (200/map.getZoom());
+                    return 15;
+                }
+            },
+            symbol: function(feature) {
+                if (feature.cluster) {
+                    return 'img/Cluster_icon_2.png'; //instead return another symbol for 
+                } else {
+                    return 'img/school-24@2x_yellow.png';
+                }
+            }
+        }
+    });
+    var health_style = new OpenLayers.Style({
+        label: "${name}",
+        fillColor: "red",
+        fontColor: "yellow",
+        fontSize: "12",
+        graphicWidth: "${graphicWidth}",
+        graphicHeight: "${graphicHeight}",
+        externalGraphic: "${symbol}"
+    }, {
+        context: {
+            name: function(feature) {
+                return (feature.cluster) ? (feature.attributes.count) : "";
+            },
+
+            graphicHeight: function(feature) {
+                if (feature.cluster) {
+                    if (feature.attributes.count > 25) {
+                        return (12 + feature.attributes.count * .15);
+                    } else {
+                        return 15;
+                    }
+                } else {
+                    // return (200/map.getZoom());
+                    return 15;
+                }
+            },
+
+            graphicWidth: function(feature) {
+                if (feature.cluster) {
+                    if (feature.attributes.count > 25) {
+                        return (12 + feature.attributes.count * .15);
+                    } else {
+                        return 15;
+                    }
+                } else {
+                    // return (200/map.getZoom());
+                    return 15;
+                }
+            },
+            symbol: function(feature) {
+                if (feature.cluster) {
+                    return 'img/Cluster_icon_2.png'; //instead return another symbol for 
+                } else {
+                    return 'img/H.png';
+                }
+            }
+        }
+    });
+    var odri_schools = new OpenLayers.Layer.Vector('Education Facilities ', {
+        strategies: [
+            //strategy
+            new OpenLayers.Strategy.Fixed(),
+            new OpenLayers.Strategy.Cluster({
+                distance: 30,
+                threshold: 2
+            }) //for clusturing 2 schools within 50 pixel distance.
+        ],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "data/education_facilities.geojson", //<-- relative or absolute URL to your .osm file
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        projection: map.displayProjection,
+        styleMap: new OpenLayers.StyleMap({
+            'default': styleschool
+        })
+    });
+    map.addLayer(odri_schools);
+
+    var healthfacilities = new OpenLayers.Layer.Vector('Health Facilities', {
+        strategies: [
+            //strategy
+            new OpenLayers.Strategy.Fixed(),
+            new OpenLayers.Strategy.Cluster({
+                distance: 30,
+                threshold: 3
+            }) //for clusturing strategy.
+        ],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "data/health_facilities.geojson", //<-- relative or absolute URL to your .osm file
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        projection: map.displayProjection,
+        styleMap: new OpenLayers.StyleMap({
+            'default': health_style
+        })
+    });
+    map.addLayer(healthfacilities);
 
 
 
