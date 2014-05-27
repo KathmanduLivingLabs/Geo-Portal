@@ -1,0 +1,24 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "amenity": "hospital", "name": "Om Hospital and Research Center" }, "geometry": { "type": "Point", "coordinates": [ 85.34481664716067, 27.721429986514792 ] } },
+{ "type": "Feature", "properties": { "amenity": "hospital", "name": "Himal Dental Hospital" }, "geometry": { "type": "Point", "coordinates": [ 85.3464267, 27.7177651 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Sunaulo Vabisya Nepal" }, "geometry": { "type": "Point", "coordinates": [ 85.34580394797355, 27.713858498577917 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Charu Polyclinic and Diagonostic Centre" }, "geometry": { "type": "Point", "coordinates": [ 85.345582973987192, 27.716974605854244 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Cosmos Diagonosis and Research Centre" }, "geometry": { "type": "Point", "coordinates": [ 85.339789279369668, 27.708108863924245 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Reliance Medicare and Research Centre" }, "geometry": { "type": "Point", "coordinates": [ 85.339561811459589, 27.708086669913552 ] } },
+{ "type": "Feature", "properties": { "amenity": "hospital", "name": "Helping Hands Community Hospital" }, "geometry": { "type": "Point", "coordinates": [ 85.346224737502268, 27.717496637436781 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Samrat Polyclinic" }, "geometry": { "type": "Point", "coordinates": [ 85.346012121728265, 27.719887302142475 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Lions Health Service Centre" }, "geometry": { "type": "Point", "coordinates": [ 85.343403136128359, 27.715316163563518 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Shrijana Medical Centre & Polyclinic" }, "geometry": { "type": "Point", "coordinates": [ 85.3464448, 27.71801865 ] } },
+{ "type": "Feature", "properties": { "amenity": "hospital", "name": "Om Samaj Dental Hospital" }, "geometry": { "type": "Point", "coordinates": [ 85.346321196552864, 27.717645888146539 ] } },
+{ "type": "Feature", "properties": { "amenity": "hospital", "name": "Pashupati Community Hospital" }, "geometry": { "type": "Point", "coordinates": [ 85.351806032579859, 27.71910175212523 ] } },
+{ "type": "Feature", "properties": { "amenity": "hospital", "name": "biraj dental hospital & research centre" }, "geometry": { "type": "Point", "coordinates": [ 85.345769236246056, 27.716863471649553 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "chabahil polyclinic" }, "geometry": { "type": "Point", "coordinates": [ 85.350797103658707, 27.718754544981959 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "urban health clinic" }, "geometry": { "type": "Point", "coordinates": [ 85.345315672083458, 27.713353206399237 ] } },
+{ "type": "Feature", "properties": { "amenity": "clinic", "name": "Riza Polyclinic and Diagonostic Centre" }, "geometry": { "type": "Point", "coordinates": [ 85.345262049234222, 27.714558234705851 ] } },
+{ "type": "Feature", "properties": { "amenity": "hospital", "name": "Medicare National Hospital and Research Center" }, "geometry": { "type": "Point", "coordinates": [ 85.346440563647519, 27.718378287235144 ] } }
+]
+}
