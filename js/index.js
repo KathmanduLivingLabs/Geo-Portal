@@ -4,9 +4,10 @@
     // load admin. boundary
     // GeoJSON from http://www.file-upload.net/download-7458340/62428.gjson.html
     var request = OpenLayers.Request.GET({
-        url: "/data/ward7.geojson",
+        url: "data/ward7.GeoJSON",
         async: false
     });
+
     var format = new OpenLayers.Format.GeoJSON({
         "internalProjection": "EPSG:900913",
         "externalProjection": "EPSG:4326"
@@ -98,4 +99,15 @@
     if (!map.getCenter()) {
         map.zoomToExtent(bounds);
     }
+
+    //adding education facilities healthfacilities and business
+    //style for education
+    //style for health
+    //style for business
+    //define the layers
+    //add to the map
+
+
+
+
 })();
