@@ -108,8 +108,8 @@
     //add to the map
 
     function onPopupClose(e) {
-        school_Control.unselectAll();
-        health_Control.unselectAll();
+        /*school_Control.unselectAll();
+        health_Control.unselectAll();*/
         business_Control.unselectAll();
     }
 
@@ -129,10 +129,11 @@
 
     function onFeatureUnselect(feature) {
         map.removePopup(feature.popup);
-        school_Control.unselectAll();
-        health_Control.unselectAll();
+        //check which Control is active
+        //debugger;
+        /*school_Control.unselectAll();
+        health_Control.unselectAll();*/
         business_Control.unselectAll();
-
     }
 
 
@@ -264,6 +265,26 @@
         })
     });
     map.addLayer(business);
+    var healthfacilities = new OpenLayers.Layer.Vector('Health Facilities', {
+        strategies: [
+            //strategy
+            new OpenLayers.Strategy.Fixed()
+            /*,
+            new OpenLayers.Strategy.Cluster({
+                distance: 30,
+                threshold: 3
+            }) //for clusturing strategy.*/
+        ],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "data/health_facilities.geojson", //<-- relative or absolute URL to your .osm file
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        projection: map.displayProjection,
+        styleMap: new OpenLayers.StyleMap({
+            'default': health_style
+        })
+    });
+    map.addLayer(healthfacilities);
     var schools = new OpenLayers.Layer.Vector('Education Facilities ', {
         strategies: [
             //strategy
@@ -285,35 +306,16 @@
     });
     map.addLayer(schools);
 
-    var healthfacilities = new OpenLayers.Layer.Vector('Health Facilities', {
-        strategies: [
-            //strategy
-            new OpenLayers.Strategy.Fixed()
-            /*,
-            new OpenLayers.Strategy.Cluster({
-                distance: 30,
-                threshold: 3
-            }) //for clusturing strategy.*/
-        ],
-        protocol: new OpenLayers.Protocol.HTTP({
-            url: "data/health_facilities.geojson", //<-- relative or absolute URL to your .osm file
-            format: new OpenLayers.Format.GeoJSON()
-        }),
-        projection: map.displayProjection,
-        styleMap: new OpenLayers.StyleMap({
-            'default': health_style
-        })
-    });
-    map.addLayer(healthfacilities);
 
-    business_Control = new OpenLayers.Control.SelectFeature(business, {
+
+    business_Control = new OpenLayers.Control.SelectFeature([business, schools, healthfacilities], {
         onSelect: onFeatureSelect,
         onUnselect: onFeatureUnselect,
         click: true
     });
     map.addControl(business_Control);
     business_Control.activate();
-    school_Control = new OpenLayers.Control.SelectFeature(schools, {
+    /*school_Control = new OpenLayers.Control.SelectFeature(schools, {
         onSelect: onFeatureSelect,
         onUnselect: onFeatureUnselect,
         click: true
@@ -327,7 +329,7 @@
         click: true
     });
     map.addControl(health_Control);
-    health_Control.activate();
+    health_Control.activate();*/
 
 
 
