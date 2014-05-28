@@ -35,8 +35,13 @@
             enableKinetic: false
         }
     }));
+    switchlayer = new OpenLayers.Control.LayerSwitcher({
+        roundedCorner: true
+    });
+    map.addControl(switchlayer);
+    switchlayer.maximizeControl();
+
     map.addControl(new OpenLayers.Control.Zoom());
-    map.addControl(new OpenLayers.Control.Permalink());
 
     // base map with restricted extent and limited zoom
     var zoomOffset = 15;
@@ -48,13 +53,17 @@
         attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
     });
     map.addLayer(osm);
+    base = new OpenLayers.Layer("Blank", {
+        isBaseLayer: true
+    });
+    map.addLayer(base);
 
     // vector overlay for "clipping"/highlighting an area
     var style = {
         strokeColor: 'purple',
         strokeWidth: 2,
         strokeOpacity: 0.6,
-        fillColor: '#BEE',
+        fillColor: '#0E7674',
         fillOpacity: 1.0
     };
     var boundaryLayer = new OpenLayers.Layer.Vector("Boundary", {
