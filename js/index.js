@@ -20,6 +20,7 @@
         projection: "EPSG:900913",
         displayProjection: "EPSG:4326",
         controls: [],
+        allOverlays: true,
         restrictedExtent: bounds.scale(1.9)
     });
 
@@ -56,7 +57,7 @@
     base = new OpenLayers.Layer("Blank", {
         isBaseLayer: true
     });
-    map.addLayer(base);
+    // map.addLayer(base);
 
     // vector overlay for "clipping"/highlighting an area
     var style = {
