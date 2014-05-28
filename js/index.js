@@ -54,7 +54,7 @@
         strokeColor: 'purple',
         strokeWidth: 2,
         strokeOpacity: 0.6,
-        fillColor: '#FFF',
+        fillColor: '#BEE',
         fillOpacity: 1.0
     };
     var boundaryLayer = new OpenLayers.Layer.Vector("Boundary", {
@@ -106,6 +106,35 @@
     //style for business
     //define the layers
     //add to the map
+
+    function onPopupClose(e) {
+        school_Control.unselectAll();
+        health_Control.unselectAll();
+        business_Control.unselectAll();
+    }
+
+    function onFeatureSelect(feature) {
+        //debugger;
+        var PopupPos1 = new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y)
+        popup_content = feature.attributes.name;
+        var popup1 = new OpenLayers.Popup.Anchored("chicken",
+            PopupPos1,
+            new OpenLayers.Size(250.225),
+            popup_content,
+            null, false, onPopupClose);
+        feature.popup = popup1;
+        map.addPopup(popup1);
+        popup1.draw();
+    }
+
+    function onFeatureUnselect(feature) {
+        map.removePopup(feature.popup);
+        school_Control.unselectAll();
+        health_Control.unselectAll();
+        business_Control.unselectAll();
+
+    }
+
 
     var styleschool = new OpenLayers.Style({
         label: "${name}",
@@ -200,14 +229,50 @@
             }
         }
     });
-    var odri_schools = new OpenLayers.Layer.Vector('Education Facilities ', {
+    var business_style = new OpenLayers.Style({
+        fillColor: "red",
+        fontColor: "yellow",
+        fontSize: "12",
+        graphicWidth: "${graphicWidth}",
+        graphicHeight: "${graphicHeight}",
+        externalGraphic: "${symbol}"
+    }, {
+        context: {
+            graphicWidth: function(feature) {
+                return 15;
+            },
+            graphicHeight: function(feature) {
+                return 15;
+            },
+            symbol: function(feature) {
+                //later on check for the features and then define the symbols accordingly
+                return 'img/business_logo.gif'
+            }
+        }
+    });
+    var business = new OpenLayers.Layer.Vector('Business', {
+        strategies: [
+            new OpenLayers.Strategy.Fixed()
+        ],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "data/business.geojson",
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        projection: map.displayProjection,
+        styleMap: new OpenLayers.StyleMap({
+            'default': business_style
+        })
+    });
+    map.addLayer(business);
+    var schools = new OpenLayers.Layer.Vector('Education Facilities ', {
         strategies: [
             //strategy
-            new OpenLayers.Strategy.Fixed(),
+            new OpenLayers.Strategy.Fixed()
+            /*,
             new OpenLayers.Strategy.Cluster({
                 distance: 30,
                 threshold: 2
-            }) //for clusturing 2 schools within 50 pixel distance.
+            }) //for clusturing 2 schools within 50 pixel distance.*/
         ],
         protocol: new OpenLayers.Protocol.HTTP({
             url: "data/education_facilities.geojson", //<-- relative or absolute URL to your .osm file
@@ -218,16 +283,17 @@
             'default': styleschool
         })
     });
-    map.addLayer(odri_schools);
+    map.addLayer(schools);
 
     var healthfacilities = new OpenLayers.Layer.Vector('Health Facilities', {
         strategies: [
             //strategy
-            new OpenLayers.Strategy.Fixed(),
+            new OpenLayers.Strategy.Fixed()
+            /*,
             new OpenLayers.Strategy.Cluster({
                 distance: 30,
                 threshold: 3
-            }) //for clusturing strategy.
+            }) //for clusturing strategy.*/
         ],
         protocol: new OpenLayers.Protocol.HTTP({
             url: "data/health_facilities.geojson", //<-- relative or absolute URL to your .osm file
@@ -239,6 +305,29 @@
         })
     });
     map.addLayer(healthfacilities);
+
+    business_Control = new OpenLayers.Control.SelectFeature(business, {
+        onSelect: onFeatureSelect,
+        onUnselect: onFeatureUnselect,
+        click: true
+    });
+    map.addControl(business_Control);
+    business_Control.activate();
+    school_Control = new OpenLayers.Control.SelectFeature(schools, {
+        onSelect: onFeatureSelect,
+        onUnselect: onFeatureUnselect,
+        click: true
+    });
+    map.addControl(school_Control);
+    school_Control.activate();
+
+    health_Control = new OpenLayers.Control.SelectFeature(healthfacilities, {
+        onSelect: onFeatureSelect,
+        onUnselect: onFeatureUnselect,
+        click: true
+    });
+    map.addControl(health_Control);
+    health_Control.activate();
 
 
 
