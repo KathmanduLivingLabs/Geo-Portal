@@ -260,6 +260,10 @@
             }
         }
     });
+
+    var stylebuilding = new OpenLayers.Style({
+        fillColor: "red",
+    })
     var business = new OpenLayers.Layer.Vector('Business', {
         strategies: [
             new OpenLayers.Strategy.Fixed()
@@ -315,8 +319,18 @@
     });
     map.addLayer(schools);
 
-
-
+    var buildings = new OpenLayers.Layer.Vector('buildings', {
+        strategies: [new OpenLayers.Strategy.Fixed()],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "data/buildings.geojson",
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        projection: map.displayProjection,
+        styleMap: new OpenLayers.StyleMap({
+            'default': stylebuilding
+        })
+    })
+    map.addLayer(buildings);
     business_Control = new OpenLayers.Control.SelectFeature([business, schools, healthfacilities], {
         onSelect: onFeatureSelect,
         onUnselect: onFeatureUnselect,
