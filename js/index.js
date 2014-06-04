@@ -127,13 +127,15 @@
         //debugger;
         var PopupPos1 = new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y)
         popup_content = feature.attributes.name;
-        var popup1 = new OpenLayers.Popup.Anchored("chicken",
+        var popup1 = new OpenLayers.Popup.FramedCloud("chicken",
             PopupPos1,
-            new OpenLayers.Size(250.225),
+            null,
             popup_content,
-            null, false, onPopupClose);
+            null, true, onPopupClose);
+
         feature.popup = popup1;
         map.addPopup(popup1);
+        popup1.setBackgroundColor('#FFBBBB');
         popup1.draw();
     }
 
