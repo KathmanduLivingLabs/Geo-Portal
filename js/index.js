@@ -42,6 +42,9 @@
     switchlayer.maximizeControl();
 
     map.addControl(new OpenLayers.Control.Zoom());
+    map.addControl(new OpenLayers.Control.Permalink({
+        anchor: true
+    }));
 
     // base map with restricted extent and limited zoom
     var zoomOffset = 15;
@@ -256,14 +259,14 @@
             },
             symbol: function(feature) {
                 //later on check for the features and then define the symbols accordingly
-                return 'img/business_logo.gif'
+                return 'img/business_logo.gif';
             }
         }
     });
 
     var stylebuilding = new OpenLayers.Style({
         fillColor: "red",
-    })
+    });
     var business = new OpenLayers.Layer.Vector('Business', {
         strategies: [
             new OpenLayers.Strategy.Fixed()
