@@ -20,6 +20,7 @@
         projection: "EPSG:900913",
         displayProjection: "EPSG:4326",
         controls: [],
+        allOverlays: true,
         restrictedExtent: bounds.scale(1.9)
     });
 
@@ -59,7 +60,7 @@
     base = new OpenLayers.Layer("Blank", {
         isBaseLayer: true
     });
-    map.addLayer(base);
+    // map.addLayer(base);
 
     // vector overlay for "clipping"/highlighting an area
     var style = {
@@ -67,7 +68,7 @@
         strokeWidth: 2,
         strokeOpacity: 0.6,
         fillColor: '#0E7674',
-        fillOpacity: 1.0
+        fillOpacity: 0.5
     };
     var boundaryLayer = new OpenLayers.Layer.Vector("Boundary", {
         displayInLayerSwitcher: false,
@@ -129,13 +130,15 @@
         //debugger;
         var PopupPos1 = new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y)
         popup_content = feature.attributes.name;
-        var popup1 = new OpenLayers.Popup.Anchored("chicken",
+        var popup1 = new OpenLayers.Popup.FramedCloud("chicken",
             PopupPos1,
-            new OpenLayers.Size(250.225),
+            null,
             popup_content,
-            null, false, onPopupClose);
+            null, true, onPopupClose);
+
         feature.popup = popup1;
         map.addPopup(popup1);
+        popup1.setBackgroundColor('#FFBBBB');
         popup1.draw();
     }
 
@@ -164,25 +167,25 @@
             graphicHeight: function(feature) {
                 if (feature.cluster) {
                     if (feature.attributes.count > 25) {
-                        return (12 + feature.attributes.count * .15);
+                        return (12 + feature.attributes.count * .35);
                     } else {
                         return 15;
                     }
                 } else {
-                    // return (200/map.getZoom());
-                    return 15;
+                    return (10 + (map.getZoom() + 1) * 5);
+                    // return 15;
                 }
             },
             graphicWidth: function(feature) {
                 if (feature.cluster) {
                     if (feature.attributes.count > 25) {
-                        return (12 + feature.attributes.count * .15);
+                        return (12 + feature.attributes.count * .35);
                     } else {
                         return 15;
                     }
                 } else {
-                    // return (200/map.getZoom());
-                    return 15;
+                    return (10 + (map.getZoom() + 1) * 5);
+                    // return 15;
                 }
             },
             symbol: function(feature) {
@@ -211,26 +214,26 @@
             graphicHeight: function(feature) {
                 if (feature.cluster) {
                     if (feature.attributes.count > 25) {
-                        return (12 + feature.attributes.count * .15);
+                        return (12 + feature.attributes.count * .35);
                     } else {
                         return 15;
                     }
                 } else {
-                    // return (200/map.getZoom());
-                    return 15;
+                    return (10 + (map.getZoom() + 1) * 5);
+                    // return 15;
                 }
             },
 
             graphicWidth: function(feature) {
                 if (feature.cluster) {
                     if (feature.attributes.count > 25) {
-                        return (12 + feature.attributes.count * .15);
+                        return (12 + feature.attributes.count * .35);
                     } else {
                         return 15;
                     }
                 } else {
-                    // return (200/map.getZoom());
-                    return 15;
+                    return (10 + (map.getZoom() + 1) * 5);
+                    // return 15;
                 }
             },
             symbol: function(feature) {
@@ -252,10 +255,10 @@
     }, {
         context: {
             graphicWidth: function(feature) {
-                return 15;
+                return (10 + (map.getZoom() + 1) * 5);
             },
             graphicHeight: function(feature) {
-                return 15;
+                return (10 + (map.getZoom() + 1) * 5);
             },
             symbol: function(feature) {
                 //later on check for the features and then define the symbols accordingly
@@ -265,7 +268,8 @@
     });
 
     var stylebuilding = new OpenLayers.Style({
-        fillColor: "red",
+        fillColor: "grey",
+        fillOpacity: 0.5
     });
     var business = new OpenLayers.Layer.Vector('Business', {
         strategies: [
@@ -322,7 +326,7 @@
     });
     map.addLayer(schools);
 
-    var buildings = new OpenLayers.Layer.Vector('buildings', {
+    var buildings = new OpenLayers.Layer.Vector('Buildings', {
         strategies: [new OpenLayers.Strategy.Fixed()],
         protocol: new OpenLayers.Protocol.HTTP({
             url: "data/buildings.geojson",
@@ -333,7 +337,7 @@
             'default': stylebuilding
         })
     })
-    map.addLayer(buildings);
+    // map.addLayer(buildings);
     business_Control = new OpenLayers.Control.SelectFeature([business, schools, healthfacilities], {
         onSelect: onFeatureSelect,
         onUnselect: onFeatureUnselect,
@@ -356,6 +360,27 @@
     });
     map.addControl(health_Control);
     health_Control.activate();*/
+    map.events.on({
+        "moveend": function() {
+            if (map.getZoom() < 17 - zoomOffset) {
+                console.log('map.getZoom() ', map.getZoom());
+
+                console.log(map.getLayersByName('Buildings'));
+                if (map.getLayersByName('Buildings').length) {
+                    map.removeLayer(buildings);
+                }
+                console.log("buildings removed");
+            } else {
+                console.log('map.getZoom() ', map.getZoom());
+
+                console.log(map.getLayersByName('Buildings'));
+                if (!map.getLayersByName('Buildings').length) {
+                    map.addLayer(buildings);
+                }
+                console.log("buildings added");
+            }
+        }
+    });
 
 
 
